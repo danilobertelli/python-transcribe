@@ -68,7 +68,7 @@ async def health_check():
     return {"status": "ok"}
 
 if __name__ == "__main__":
-    # Obtém a porta a partir da variável de ambiente, ou utiliza 8000 como padrão
-    port = int(os.environ.get("PORT", 8000))
+    # Obtém a porta a partir da variável de ambiente, ou utiliza 8080 como padrão
+    port = int(os.environ.get("PORT", 8080))
     logging.info(f"Iniciando o servidor na porta {port}...")
     uvicorn.run(app, host="0.0.0.0", port=port)
