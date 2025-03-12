@@ -54,6 +54,7 @@ async def transcribe_audio(file: UploadFile = File(...)):
         logging.info("Arquivo temporário removido.")
 
         # Retorna a transcrição (geralmente um dicionário com a chave 'text')
+        logging.info(f"Transcrição gerada: {transcription}")
         return transcription
 
     except Exception as e:
