@@ -20,10 +20,10 @@ app = FastAPI()
 # Configuração de CORS (ajuste os domínios conforme necessário)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://fluffy-trifle-0252c4.netlify.app"],  # Permitir apenas sua aplicação React
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permitir todos os métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permitir todos os headers
 )
 
 @app.post("/transcribe")
