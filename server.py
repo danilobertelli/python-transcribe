@@ -37,10 +37,10 @@ async def transcribe_audio(file: UploadFile = File(...)):
         contents = await file.read()
         logging.info("Arquivo lido com sucesso.")
 
-        # Cria um arquivo temporário e fecha-o antes de usar
+        # Cria um arquivo temporário com delete=False e fecha-o antes de usar
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
             tmp.write(contents)
-            tmp.flush()  # Garante que os dados estejam gravados
+            tmp.flush()
             temp_file_path = tmp.name
         logging.info(f"Arquivo temporário criado em {temp_file_path}")
 
@@ -60,6 +60,15 @@ async def transcribe_audio(file: UploadFile = File(...)):
         logging.error("Erro ao processar o arquivo", exc_info=True)
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
+@app.get("/health")
+async def health_check():
+    """
+    Endpoint de verificação de saúde da aplicação.
+    """
+    return {"status": "ok"}
+
 if __name__ == "__main__":
-    logging.info("Iniciando o servidor na porta 8000...")
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    # Obtém a porta a partir da variável de ambiente, ou utiliza 8000 como padrão
+    port = int(os.environ.get("PORT", 8000))
+    logging.info(f"Iniciando o servidor na porta {port}...")
+    uvicorn.run(app, host="0.0.0.0", port=port)
